@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temples &amp; Locations · Thiruvasgam</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <nav>
+    <span class="site-title">திருவாசகம் · Thiruvasgam</span>
+    <a href="index.html">Home</a>
+    <a href="chapters.html">Chapters</a>
+    <a href="locations.html">Locations</a>
+    <a href="siva-names.html">Siva Names</a>
+    <a href="Reference.html">Reference</a>
+  </nav>
+
+  <!-- Page header -->
+  <div class="container">
+    <div class="page-header">
+      <h2>Temples &amp; Sacred Places</h2>
+      <p class="page-subtitle">திருத்தலங்கள் · Thiruthtalangal</p>
+      <p class="page-intro">The Thiruvasagam is a map of a spiritual journey that spans across various sacred landscapes of Tamil Nadu. Each location represents a specific phase in Manikkavasagar's transformation from a royal minister to a liberated saint.</p>
+    </div>
+  </div>
+
+  <!-- Map + sidebar panel -->
+  <section class="map-panel-layout">
+    <div id="temple-map" aria-label="Map of temple locations in Tamil Nadu"></div>
+    <aside class="map-sidebar">
+      <header class="sidebar-header">
+        <h3>Sacred places of Thiruvasagam</h3>
+        <p>While dozens of places are mentioned throughout the 51 hymns, four locations form the foundational geography of the text. During his wandering years, several other shrines provided the backdrop for specific hymns.</p>
+      </header>
+      <ul class="sidebar-list">
+
+        <li class="sidebar-group-label">The Four Essential Pillars</li>
+
+        <li class="sidebar-item" data-index="0">
+          <img data-wiki="திருவாதவூர்_திருமறைநாதர்_கோயில்" data-wiki-lang="ta" alt="Tiruvadavur" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">திருவாதவூர்</span>
+            <span class="sidebar-english">Tiruvadavur</span>
+            <span class="sidebar-district">Madurai District · Hindu Temple</span>
+            <span class="sidebar-note">Birthplace of Manikkavasagar — origins and early Shaiva roots.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="1">
+          <img data-wiki="Avudaiyarkoil" alt="Tiruperundurai" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">திருப்பெருந்துறை</span>
+            <span class="sidebar-english">Tiruperundurai · Avudaiyarkoyil</span>
+            <span class="sidebar-district">Pudukkottai District · Hindu Temple</span>
+            <span class="sidebar-note">Place of initiation — where Shiva appeared as Guru under the Kuruntha tree.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="2">
+          <img data-wiki="Uthirakosamangai" alt="Uttarakosamangai" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">உத்தரகோசமங்கை</span>
+            <span class="sidebar-english">Uttarakosamangai</span>
+            <span class="sidebar-district">Ramanathapuram District · Hindu Temple</span>
+            <span class="sidebar-note">Where Manikkavasagar composed Neethal Vinnappam — a work of profound surrender.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="3">
+          <img data-wiki="Nataraja_Temple,_Chidambaram" alt="Chidambaram" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">தில்லை · சிதம்பரம்</span>
+            <span class="sidebar-english">Chidambaram · Nataraja Temple</span>
+            <span class="sidebar-district">Cuddalore District · Hindu Temple</span>
+            <span class="sidebar-note">Final destination and site of liberation — "Tillai" is the most frequent place name in the text.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-group-label">Other Significant Temples</li>
+
+        <li class="sidebar-item" data-index="4">
+          <img data-wiki="Arunachalesvara_Temple" alt="Tiruvannamalai" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">திருவண்ணாமலை</span>
+            <span class="sidebar-english">Tiruvannamalai · Arunachaleswarar Temple</span>
+            <span class="sidebar-district">Tiruvannamalai District · Hindu Temple</span>
+            <span class="sidebar-note">Shiva as the fire-element — hymns here use metaphors of light and transformation.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="5">
+          <img data-wiki="Thyagaraja_Temple,_Tiruvottiyur" alt="Thiruvottiyur" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">திருவொற்றியூர்</span>
+            <span class="sidebar-english">Thiruvottiyur · Thyagaraja Temple</span>
+            <span class="sidebar-district">Chennai (North) · Hindu Temple</span>
+            <span class="sidebar-note">Coastal shrine — the infinite ocean meeting the shore runs through the hymns here.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="6">
+          <img data-wiki="Sattainathar_Temple,_Sirkazhi" alt="Sirkazhi" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">சீர்காழி</span>
+            <span class="sidebar-english">Sirkazhi · Sattainathar Temple</span>
+            <span class="sidebar-district">Nagapattinam District · Hindu Temple</span>
+            <span class="sidebar-note">Heart of the Kaveri delta's Shaiva tradition — Kanda Pattu composed here.</span>
+          </div>
+        </li>
+
+        <li class="sidebar-item" data-index="7">
+          <img data-wiki="Meenakshi_temple" alt="Madurai" />
+          <div class="sidebar-item-info">
+            <span class="sidebar-tamil">மதுரை</span>
+            <span class="sidebar-english">Madurai · Meenakshi-Sundareswarar Temple</span>
+            <span class="sidebar-district">Madurai District · Hindu Temple</span>
+            <span class="sidebar-note">Political heart of the Pandya kingdom — site of his worldly life and early spiritual trials.</span>
+          </div>
+        </li>
+
+      </ul>
+    </aside>
+  </section>
+
+  <!-- Detailed temple entries -->
+  <div class="container">
+    <section class="temple-list">
+      <h3 class="section-heading">Temples &amp; Locations</h3>
+
+      <!-- The Four Essential Pillars -->
+      <div class="temple-group-heading">
+        <h4>The Four Essential Pillars</h4>
+        <p>The foundational geography of the Thiruvasagam — each a distinct phase of transformation</p>
+      </div>
+
+      <article class="temple-entry" id="tiruvadavur">
+        <div class="temple-header">
+          <span class="temple-num">01</span>
+          <div class="temple-names">
+            <span class="temple-tamil">திருவாதவூர்</span>
+            <span class="temple-english">Tiruvadavur</span>
+          </div>
+          <span class="temple-district">Madurai District</span>
+        </div>
+        <a class="temple-photo" href="https://ta.wikipedia.org/wiki/%E0%AE%A4%E0%AE%BF%E0%AE%B0%E0%AF%81%E0%AE%B5%E0%AE%BE%E0%AE%A4%E0%AE%B5%E0%AF%82%E0%AE%B0%E0%AF%8D_%E0%AE%A4%E0%AE%BF%E0%AE%B0%E0%AF%81%E0%AE%AE%E0%AE%B1%E0%AF%88%E0%AE%A8%E0%AE%BE%E0%AE%A4%E0%AE%B0%E0%AF%8D_%E0%AE%95%E0%AF%8B%E0%AE%AF%E0%AE%BF%E0%AE%B2%E0%AF%8D" target="_blank" rel="noopener">
+          <img data-wiki="திருவாதவூர்_திருமறைநாதர்_கோயில்" data-wiki-lang="ta" alt="Tiruvadavur temple" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia (Tamil) ↗</span>
+        </a>
+        <p class="temple-significance">The birthplace of Manikkavasagar. It represents his origins and the traditional Shaiva roots that shaped his early life. The local Shiva temple — Tiruvadavurdevar — is associated with the family tradition of devotion that formed him. Though he left Tiruvadavur young, the opening of Sivapuranam can be read as a man tracing his own origin back to the moment before birth.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> சிவபுராணம் (Sivapuranam, hymn 1)</p>
+      </article>
+
+      <article class="temple-entry" id="tiruperundurai">
+        <div class="temple-header">
+          <span class="temple-num">02</span>
+          <div class="temple-names">
+            <span class="temple-tamil">திருப்பெருந்துறை</span>
+            <span class="temple-english">Tiruperundurai · Avudaiyarkoyil</span>
+          </div>
+          <span class="temple-district">Pudukkottai District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Avudaiyarkoil" target="_blank" rel="noopener">
+          <img data-wiki="Avudaiyarkoil" alt="Avudaiyarkoyil temple, Tiruperundurai" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">Arguably the most significant site in the entire work. It is the place of "initiation" where Shiva appeared in the form of a Guru under a Kuruntha tree to claim the saint. The earliest, most ecstatic hymns — Sivapuranam and Kirti Tiruvagaval — are deeply rooted here. The royal treasury was spent not on horses but on this temple, and Manikkavasagar lingered in a state of devotional ecstasy composing the opening sections of the Thiruvasagam.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> சிவபுராணம் (1), கீர்த்தித் திருவகவல் (2), திருவண்டப்பகுதி (3), திருவெம்பாவை (4–13), திருப்பொற்சுண்ணம் (14)</p>
+      </article>
+
+      <article class="temple-entry" id="uttarakosamangai">
+        <div class="temple-header">
+          <span class="temple-num">03</span>
+          <div class="temple-names">
+            <span class="temple-tamil">உத்தரகோசமங்கை</span>
+            <span class="temple-english">Uttarakosamangai</span>
+          </div>
+          <span class="temple-district">Ramanathapuram District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Uthirakosamangai" target="_blank" rel="noopener">
+          <img data-wiki="Uthirakosamangai" alt="Uttarakosamangai temple" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">An ancient temple where Manikkavasagar spent a significant amount of time. It is the site where he composed the soul-stirring Neethal Vinnappam (The Decad of Abandonment) — a work of profound surrender in which the saint pleads to be released entirely from worldly existence. The presiding deity here is Mangalanatheswara (Shiva), and the temple is one of the few specifically named in the text as a place of extended residence rather than passing pilgrimage.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> நீத்தல் விண்ணப்பம் (Neethal Vinnappam, hymn 6)</p>
+      </article>
+
+      <article class="temple-entry" id="chidambaram">
+        <div class="temple-header">
+          <span class="temple-num">04</span>
+          <div class="temple-names">
+            <span class="temple-tamil">தில்லை · சிதம்பரம்</span>
+            <span class="temple-english">Chidambaram · Nataraja Temple</span>
+          </div>
+          <span class="temple-district">Cuddalore District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Nataraja_Temple,_Chidambaram" target="_blank" rel="noopener">
+          <img data-wiki="Nataraja_Temple,_Chidambaram" alt="Nataraja Temple, Chidambaram" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">The final destination and site of his liberation (mukti). He spent his final years here addressing the dancing form of Shiva — Nataraja, the lord of the cosmic dance. The name "Tillai" is the most frequently mentioned place name in the Thiruvasagam. According to the Periyapuranam, Manikkavasagar one morning entered the sanctum, stood before Nataraja, and dissolved into pure white light — he did not die, he merged.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> கோயில் முத்து திருப்பதிகம் (21), கோயில் திருப்பதிகம் (22), திருப்பள்ளியெழுச்சி (20), திருச்சாழல் (37), அச்சோ பதிகம் (51)</p>
+      </article>
+
+      <!-- Other Significant Temples -->
+      <div class="temple-group-heading">
+        <h4>Other Significant Temples</h4>
+        <p>Shrines that provided the backdrop for specific hymns during the wandering years</p>
+      </div>
+
+      <article class="temple-entry" id="tiruvannamalai">
+        <div class="temple-header">
+          <span class="temple-num">05</span>
+          <div class="temple-names">
+            <span class="temple-tamil">திருவண்ணாமலை</span>
+            <span class="temple-english">Tiruvannamalai · Arunachaleswarar Temple</span>
+          </div>
+          <span class="temple-district">Tiruvannamalai District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Arunachalesvara_Temple" target="_blank" rel="noopener">
+          <img data-wiki="Arunachalesvara_Temple" alt="Arunachaleswarar Temple, Tiruvannamalai" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">Where Shiva is worshipped as the element of fire — a column of fire (jyotirlinga) so vast that neither Brahma nor Vishnu could find its top or base. Manikkavasagar's hymns here, such as Tiruvempavai, often utilise metaphors of light and transformation. The fire-image runs through many of the Thiruvasagam hymns as one of their central motifs: Shiva as blazing light that consumes and transforms everything it touches.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> திருவெம்பாவை (Tiruvempavai, hymns 4–13), திருச்சதகம் (Tiruchchatakam, hymn 5)</p>
+      </article>
+
+      <article class="temple-entry" id="thiruvottiyur">
+        <div class="temple-header">
+          <span class="temple-num">06</span>
+          <div class="temple-names">
+            <span class="temple-tamil">திருவொற்றியூர்</span>
+            <span class="temple-english">Thiruvottiyur · Thyagaraja Temple</span>
+          </div>
+          <span class="temple-district">Chennai (North)</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Thyagaraja_Temple,_Tiruvottiyur" target="_blank" rel="noopener">
+          <img data-wiki="Thyagaraja_Temple,_Tiruvottiyur" alt="Thyagaraja Temple, Thiruvottiyur" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">A coastal shrine that influenced hymns like Koyil Tiruppatikam, lending a sense of the infinite ocean meeting the shore to his poetry. The presiding deity is Thyagarajar (Shiva as the lord of renunciation). Manikkavasagar passed through Thiruvottiyur during his northward pilgrimage, and its coastal setting — the Bay of Bengal visible, the air salt-tinged — enters the emotional register of the hymns connected with this place.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> கோயில் திருப்பதிகம் (Koyil Tiruppatikam, hymn 22), திருவார்த்தை (Tiru Vartai, hymn 43)</p>
+      </article>
+
+      <article class="temple-entry" id="sirkazhi">
+        <div class="temple-header">
+          <span class="temple-num">07</span>
+          <div class="temple-names">
+            <span class="temple-tamil">சீர்காழி</span>
+            <span class="temple-english">Sirkazhi · Sattainathar Temple</span>
+          </div>
+          <span class="temple-district">Nagapattinam District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Sattainathar_Temple,_Sirkazhi" target="_blank" rel="noopener">
+          <img data-wiki="Sattainathar_Temple,_Sirkazhi" alt="Sattainathar Temple, Sirkazhi" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">A center of the Kaveri delta's Shaiva tradition where he composed hymns like Kanda Pattu, connecting his work to the long lineage of Tamil devotion. Sirkazhi is associated above all with Thirugnana Sambandar, the child-saint who sang here in the 7th century CE — the Thevaram corpus was already centuries old by Manikkavasagar's time. Composing here was an act of entering a conversation with that tradition.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> கந்தர்வ பத்து (Kanda Pattu, hymn 31), குலாப்பத்து (Kulap Pattu, hymn 40)</p>
+      </article>
+
+      <article class="temple-entry" id="madurai">
+        <div class="temple-header">
+          <span class="temple-num">08</span>
+          <div class="temple-names">
+            <span class="temple-tamil">மதுரை</span>
+            <span class="temple-english">Madurai · Meenakshi-Sundareswarar Temple</span>
+          </div>
+          <span class="temple-district">Madurai District</span>
+        </div>
+        <a class="temple-photo" href="https://en.wikipedia.org/wiki/Meenakshi_temple" target="_blank" rel="noopener">
+          <img data-wiki="Meenakshi_temple" alt="Meenakshi-Sundareswarar Temple, Madurai" loading="lazy" />
+          <span class="temple-photo-caption">Wikipedia ↗</span>
+        </a>
+        <p class="temple-significance">The political heart of the Pandya kingdom where he served as Prime Minister. While the city represents his worldly life, the Meenakshi-Sundareswarar temple remains a central landmark of his early spiritual trials. It was here that the king dispatched Manikkavasagar on the fateful horse-buying errand, and here that the consequences of his transformation — the flooded walls, the divine horses — played out.</p>
+        <p class="temple-hymns"><span class="hymns-label">Related hymns:</span> சிவபுராணம் (Sivapuranam, hymn 1), திருச்சதகம் (Tiruchchatakam, hymn 5)</p>
+      </article>
+
+    </section>
+  </div>
+
+  <footer>
+    திருச்சிற்றம்பலம் · Tiruchitrambalam
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var templeData = [
+      { lat: 9.6,   lng: 78.2,  tamil: 'திருவாதவூர்',         english: 'Tiruvadavur',        district: 'Madurai District',        note: 'Birthplace of Manikkavasagar — his origins and Shaiva roots.',                  anchor: 'tiruvadavur',        pillar: true  },
+      { lat: 10.47, lng: 79.07, tamil: 'திருப்பெருந்துறை',    english: 'Tiruperundurai',      district: 'Pudukkottai District',    note: 'Place of initiation — Shiva appeared as Guru under the Kuruntha tree.',        anchor: 'tiruperundurai',     pillar: true  },
+      { lat: 9.42,  lng: 78.83, tamil: 'உத்தரகோசமங்கை',      english: 'Uttarakosamangai',    district: 'Ramanathapuram District', note: 'Where Manikkavasagar composed Neethal Vinnappam — the Decad of Abandonment.',  anchor: 'uttarakosamangai',   pillar: true  },
+      { lat: 11.4,  lng: 79.69, tamil: 'தில்லை · சிதம்பரம்', english: 'Chidambaram',         district: 'Cuddalore District',      note: "Final destination — site of liberation. 'Tillai' is the most frequent place name in the text.", anchor: 'chidambaram', pillar: true },
+      { lat: 12.23, lng: 79.07, tamil: 'திருவண்ணாமலை',        english: 'Tiruvannamalai',      district: 'Tiruvannamalai District', note: 'Shiva as the fire-element — hymns here use metaphors of light and transformation.', anchor: 'tiruvannamalai', pillar: false },
+      { lat: 13.15, lng: 80.32, tamil: 'திருவொற்றியூர்',       english: 'Thiruvottiyur',       district: 'Chennai',                 note: 'Coastal shrine — the infinite ocean meeting the shore runs through the hymns here.', anchor: 'thiruvottiyur', pillar: false },
+      { lat: 11.23, lng: 79.74, tamil: 'சீர்காழி',            english: 'Sirkazhi',            district: 'Nagapattinam District',   note: 'Center of the Kaveri delta Shaiva tradition — Kanda Pattu composed here.',     anchor: 'sirkazhi',           pillar: false },
+      { lat: 9.92,  lng: 78.12, tamil: 'மதுரை',               english: 'Madurai',             district: 'Madurai District',        note: 'Political heart of the Pandya kingdom — worldly life and early spiritual trials.', anchor: 'madurai',          pillar: false }
+    ];
+
+    (function() {
+      var map = L.map('temple-map', {
+        center: [11.0, 79.0],
+        zoom: 7,
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      var sidebarItems = document.querySelectorAll('.sidebar-item');
+
+      function makeIcon(large) {
+        return L.divIcon({
+          className: 'temple-marker' + (large ? ' temple-marker-large' : ''),
+          html: '<span></span>',
+          iconSize:   large ? [18, 18] : [14, 14],
+          iconAnchor: large ? [9, 9]   : [7, 7],
+          popupAnchor: [0, -12]
+        });
+      }
+
+      function activateItem(i, panMap) {
+        sidebarItems.forEach(function(el) { el.classList.remove('active'); });
+        sidebarItems[i].classList.add('active');
+        sidebarItems[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        templeData[i].marker.openPopup();
+        if (panMap) map.panTo([templeData[i].lat, templeData[i].lng]);
+      }
+
+      templeData.forEach(function(t, i) {
+        t.marker = L.marker([t.lat, t.lng], { icon: makeIcon(t.pillar) }).addTo(map);
+
+        var popup = '<div style="font-family:Georgia,serif;font-size:0.85rem;line-height:1.6;color:#111;max-width:220px">'
+          + '<strong style="font-size:1rem">' + t.tamil + '</strong><br>'
+          + t.english + ' &mdash; ' + t.district + '<br>'
+          + '<em>' + t.note + '</em><br>'
+          + '<a href="#' + t.anchor + '" style="color:#111;text-decoration:underline">View details &darr;</a>'
+          + '</div>';
+
+        t.marker.bindPopup(popup, { maxWidth: 260 });
+        t.marker.on('click', function() { activateItem(i, false); });
+      });
+
+      sidebarItems.forEach(function(item, i) {
+        item.addEventListener('click', function() { activateItem(i, true); });
+      });
+    })();
+  </script>
+
+  <!-- Wikipedia REST API — loads the correct thumbnail for every temple photo.
+       data-wiki-lang="ta" triggers Tamil Wikipedia for Tiruvadavur. -->
+  <script>
+    document.querySelectorAll('img[data-wiki]').forEach(function(img) {
+      var lang = img.dataset.wikiLang || 'en';
+      fetch('https://' + lang + '.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(img.dataset.wiki))
+        .then(function(r) { return r.json(); })
+        .then(function(d) { if (d.thumbnail) { img.src = d.thumbnail.source; } })
+        .catch(function() {});
+    });
+  </script>
+
+</body>
+</html>
