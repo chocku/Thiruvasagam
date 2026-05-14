@@ -6,10 +6,28 @@ Usage:
     python build-chapter.py translated/NN-slug.txt
 
 What it does:
-    1. Parses the .txt file (handles 3-layer and 4-layer verse formats)
-    2. Writes chapters/NN-slug.html with full nav buttons
+    1. Parses the .txt file (4-layer format: Tamil / Translit / Gloss / English)
+    2. Writes chapters/NN-slug.html with summary, full nav buttons
     3. Updates chapters.html (coming-soon → available)
     4. Updates neighbouring chapter files (prev/next nav buttons)
+
+.txt format:
+    Tamil Title — ENGLISH TITLE
+    ====================================
+    By Manikkavasagar | Thiruvasagam, Chapter N
+    Composed at <Location>
+
+    [Summary paragraph — any text here before the first separator]
+
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    1
+
+    Tamil    chunks    here
+    Translit    chunks    here
+    Gloss    chunks    here
+
+    **English translation**
 """
 
 import re, sys
@@ -55,6 +73,12 @@ def parse_txt(filepath):
     SEP = re.compile(r'^━{10,}')
     sep_pos = [i for i, l in enumerate(lines) if SEP.match(l.strip())]
 
+    # Summary: any non-blank text between line 4 and the first separator
+    summary = ''
+    if sep_pos:
+        summary_lines = [l.strip() for l in lines[4:sep_pos[0]] if l.strip()]
+        summary = ' '.join(summary_lines)
+
     verses = []
 
     for idx, sep_start in enumerate(sep_pos):
@@ -96,13 +120,16 @@ def parse_txt(filepath):
             eng_raw[-1] = eng_raw[-1].rstrip('*').strip()
             eng_raw = [l for l in eng_raw if l]
 
-        # Determine layers by count of content lines
+        # Determine layers — always expect 4-layer (Tamil / Translit / Gloss / English)
         if len(content_lines) >= 3:
             tamil_line, translit_line, gloss_line = content_lines[0], content_lines[1], content_lines[2]
         elif len(content_lines) == 2:
+            # Old 3-layer format: Tamil + Gloss, no translit
             tamil_line, translit_line, gloss_line = content_lines[0], None, content_lines[1]
+            print(f"  WARN: verse {verse_num} missing transliteration (3-layer format)")
         elif len(content_lines) == 1:
             tamil_line, translit_line, gloss_line = content_lines[0], None, None
+            print(f"  WARN: verse {verse_num} missing transliteration and gloss")
         else:
             continue
 
@@ -119,6 +146,7 @@ def parse_txt(filepath):
         'english_title': english_title,
         'chapter_num':   chapter_num,
         'location':      location,
+        'summary':       summary,
         'verses':        verses,
     }
 
@@ -185,6 +213,8 @@ def build_html(data, slug):
     prev_slug, prev_num, next_slug, next_num = get_nav_neighbours(data['chapter_num'], slug)
     nav = make_nav_html(prev_slug, prev_num, next_slug, next_num)
     verses_html = '\n\n'.join(build_verse_html(v) for v in data['verses'])
+    summary_html = (f'\n    <p class="chapter-summary">{escape(data["summary"])}</p>\n'
+                    if data.get('summary') else '')
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -214,7 +244,7 @@ def build_html(data, slug):
     </div>
 
 {nav}
-
+{summary_html}
 {verses_html}
 
     <p style="text-align:center; margin-top: 3rem; color: #888;">திருச்சிற்றம்பலம் · Tiruchitrambalam</p>

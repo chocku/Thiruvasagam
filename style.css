@@ -102,6 +102,17 @@ nav a { font-size: 0.95rem; }
 .chapter-card.available:hover { background: #f5f5f5; }
 .chapter-card.coming-soon { color: #aaa; cursor: default; }
 
+/* ── Chapter summary ── */
+.chapter-summary {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.7;
+  margin: 1.25rem 0 1.5rem;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid #ddd;
+  font-style: italic;
+}
+
 /* ── Chapter navigation ── */
 .chapter-nav {
   display: flex;
