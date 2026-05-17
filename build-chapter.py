@@ -36,6 +36,60 @@ from html import escape
 
 BASE = Path(__file__).parent
 
+CHAPTER_SLUGS = {
+    1:  "01-sivapuranam",
+    2:  "02-kirttit-tiru-agaval",
+    3:  "03-tiru-andap-pakuti",
+    4:  "04-porrrit-tiru-agaval",
+    5:  "05-tiru-ccatakam",
+    6:  "06-neettal-vinnappam",
+    7:  "07-tiru-empavai",
+    8:  "08-tiru-ammanai",
+    9:  "09-tiru-porr-cunnam",
+    10: "10-tiru-kottumpi",
+    11: "11-tiru-tellenam",
+    12: "12-tiru-ccazal",
+    13: "13-tiru-puvalli",
+    14: "14-tiru-untiyar",
+    15: "15-tiru-tol-nokkam",
+    16: "16-tiru-ponnusal",
+    17: "17-annai-pattu",
+    18: "18-kuyil-pattu",
+    19: "19-tiru-tacankam",
+    20: "20-tiru-palliyezhucchi",
+    21: "21-koyil-mutta-tiruppatikam",
+    22: "22-koyil-tiruppatikam",
+    23: "23-cettilap-pattu",
+    24: "24-ataikkala-pattu",
+    25: "25-acai-pattu",
+    26: "26-aticiya-pattu",
+    27: "27-punarcchi-pattu",
+    28: "28-valap-pattu",
+    29: "29-arut-pattu",
+    30: "30-tiru-kazukkunnra-patikam",
+    31: "31-kanda-pattu",
+    32: "32-pirartanai-pattu",
+    33: "33-kuzaitta-pattu",
+    34: "34-uyirunni-pattu",
+    35: "35-acca-pattu",
+    36: "36-tirupandi-patikam",
+    37: "37-piditta-pattu",
+    38: "38-tiru-ecaravu",
+    39: "39-tiru-pulampal",
+    40: "40-kulap-pattu",
+    41: "41-arrputa-pattu",
+    42: "42-cenni-pattu",
+    43: "43-tiru-vartai",
+    44: "44-enna-patikam",
+    45: "45-yattirai-pattu",
+    46: "46-tirupadai-ezhucchi",
+    47: "47-tiru-venpa",
+    48: "48-pantaya-nanmarai",
+    49: "49-tirupadai-atci",
+    50: "50-ananta-malai",
+    51: "51-acco-patikam",
+}
+
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -153,28 +207,13 @@ def parse_txt(filepath):
 
 # ── Nav ───────────────────────────────────────────────────────────────────────
 
-def get_available_chapters(new_num=None, new_slug=None):
-    """Return sorted (num, slug) list of existing chapter HTML files,
-    optionally including a new chapter being added."""
-    chapters_dir = BASE / 'chapters'
-    result = {}
-    for f in chapters_dir.glob('*.html'):
-        m = re.match(r'^(\d+)-', f.stem)
-        if m:
-            result[int(m.group(1))] = f.stem
-    if new_num is not None:
-        result[new_num] = new_slug
-    return sorted(result.items())
-
-
-def get_nav_neighbours(chapter_num, slug):
-    available = get_available_chapters(chapter_num, slug)
-    pos = next((i for i, (n, _) in enumerate(available) if n == chapter_num), None)
-    if pos is None:
-        return None, None, None, None
-    prev_num, prev_slug = available[pos - 1] if pos > 0 else (None, None)
-    next_num, next_slug = available[pos + 1] if pos < len(available) - 1 else (None, None)
-    return prev_slug, prev_num, next_slug, next_num
+def get_nav_neighbours(chapter_num):
+    prev_num = chapter_num - 1
+    next_num = chapter_num + 1
+    prev_slug = CHAPTER_SLUGS.get(prev_num)
+    next_slug = CHAPTER_SLUGS.get(next_num)
+    return (prev_slug, prev_num if prev_slug else None,
+            next_slug, next_num if next_slug else None)
 
 
 def make_nav_html(prev_slug, prev_num, next_slug, next_num):
@@ -210,7 +249,7 @@ def build_verse_html(verse):
 
 
 def build_html(data, slug):
-    prev_slug, prev_num, next_slug, next_num = get_nav_neighbours(data['chapter_num'], slug)
+    prev_slug, prev_num, next_slug, next_num = get_nav_neighbours(data['chapter_num'])
     nav = make_nav_html(prev_slug, prev_num, next_slug, next_num)
     verses_html = '\n\n'.join(build_verse_html(v) for v in data['verses'])
     summary_html = (f'\n    <p class="chapter-summary">{escape(data["summary"])}</p>\n'
@@ -297,44 +336,6 @@ def update_chapters_html(chapter_num, slug):
     print(f"  OK:chapters.html: chapter {chapter_num} marked available")
 
 
-# ── Update neighbouring chapter nav buttons ───────────────────────────────────
-
-def update_neighbour_nav(slug, chapter_num, prev_slug, prev_num, next_slug, next_num):
-    chapters_dir = BASE / 'chapters'
-
-    # Update prev chapter's NEXT button (comes after "All Chapters" link)
-    if prev_slug:
-        path = chapters_dir / f"{prev_slug}.html"
-        if path.exists():
-            with open(path, 'r', encoding='utf-8') as f:
-                content = f.read()
-            new_btn = f'<a href="{slug}.html" class="nav-btn">Ch. {chapter_num} →</a>'
-            content = re.sub(
-                r'(All Chapters</a>\s*\n\s*)(?:<a href="[^"]*" class="nav-btn">Ch\. \d+ →</a>|<span class="nav-btn nav-disabled"></span>)',
-                r'\1' + new_btn,
-                content
-            )
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            print(f"  OK:{prev_slug}.html: next -> Ch. {chapter_num}")
-
-    # Update next chapter's PREV button (comes before "All Chapters" link)
-    if next_slug:
-        path = chapters_dir / f"{next_slug}.html"
-        if path.exists():
-            with open(path, 'r', encoding='utf-8') as f:
-                content = f.read()
-            new_btn = f'<a href="{slug}.html" class="nav-btn">← Ch. {chapter_num}</a>'
-            content = re.sub(
-                r'(?:<a href="[^"]*" class="nav-btn">← Ch\. \d+</a>|<span class="nav-btn nav-disabled"></span>)(\s*\n\s*<a href="\.\.\/chapters\.html")',
-                new_btn + r'\1',
-                content
-            )
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            print(f"  OK:{next_slug}.html: prev -> Ch. {chapter_num}")
-
-
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -355,7 +356,7 @@ def main():
     data = parse_txt(txt_path)
     print(f"  Chapter {data['chapter_num']}: {data['english_title']} ({len(data['verses'])} verses)")
 
-    prev_slug, prev_num, next_slug, next_num = get_nav_neighbours(data['chapter_num'], slug)
+    prev_slug, prev_num, next_slug, next_num = get_nav_neighbours(data['chapter_num'])
     print(f"  Nav: prev={prev_slug} ({prev_num})  next={next_slug} ({next_num})")
 
     # Write HTML
@@ -367,9 +368,6 @@ def main():
 
     # Update chapters.html
     update_chapters_html(data['chapter_num'], slug)
-
-    # Update neighbours
-    update_neighbour_nav(slug, data['chapter_num'], prev_slug, prev_num, next_slug, next_num)
 
     print(f"\nDone. To publish:")
     print(f"  git add -u && git add chapters/{slug}.html")
